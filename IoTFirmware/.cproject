@@ -21,6 +21,29 @@
 								<option id="io.sloeber.compiler.cpp.sketch.option.incpath.1865389872" name="Include Paths (-I)" superClass="io.sloeber.compiler.cpp.sketch.option.incpath" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/core/core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/core/variant}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ArduinoJson}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/DNSServer}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/DNSServer/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/EEPROM}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266HTTPClient}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266HTTPClient/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266httpUpdate}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266httpUpdate/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncTCP}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncTCP/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncUDP}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncUDP/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncWebServer}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncWebServer/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Ticker}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Timezone}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Hash}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Hash/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Time}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.cpp.sketch.input.1808899402" name="CPP source files" superClass="io.sloeber.compiler.cpp.sketch.input"/>
 							</tool>
@@ -28,6 +51,29 @@
 								<option id="io.sloeber.compiler.c.sketch.option.incpath.741432491" name="Include Paths (-I)" superClass="io.sloeber.compiler.c.sketch.option.incpath" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/core/core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/core/variant}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ArduinoJson}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/DNSServer}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/DNSServer/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/EEPROM}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266HTTPClient}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266HTTPClient/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266httpUpdate}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266httpUpdate/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncTCP}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncTCP/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncUDP}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncUDP/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncWebServer}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncWebServer/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Ticker}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Timezone}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Hash}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Hash/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Time}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.c.sketch.input.279834401" name="C Source Files" superClass="io.sloeber.compiler.c.sketch.input"/>
 							</tool>
@@ -35,6 +81,29 @@
 								<option id="io.sloeber.compiler.asm.sketch.option.incpath.266992937" name="Include Paths (-I)" superClass="io.sloeber.compiler.asm.sketch.option.incpath" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/core/core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/core/variant}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ArduinoJson}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/DNSServer}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/DNSServer/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/EEPROM}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266HTTPClient}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266HTTPClient/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266httpUpdate}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266httpUpdate/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncTCP}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncTCP/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncUDP}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncUDP/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncWebServer}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncWebServer/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Ticker}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Timezone}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Hash}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Hash/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Time}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.S.sketch.input.2049129695" name="Assembly source files" superClass="io.sloeber.compiler.S.sketch.input"/>
 							</tool>
@@ -59,4 +128,5 @@
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>
