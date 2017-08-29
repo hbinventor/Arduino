@@ -2,9 +2,8 @@
 //This is a automatic generated file
 //Please do not modify this file
 //If you touch this file your change will be overwritten during the next build
-//This file has been generated on 2017-08-29 15:17:31
+//This file has been generated on 2017-08-29 15:20:56
 
-#include "Arduino.h"
 #include "Arduino.h"
 #include <ESP8266WiFi.h>
 #include <ESPAsyncUDP.h>
@@ -55,8 +54,6 @@
 #include "EventHandle.h"
 void setup() ;
 void loop() ;
-void setup() ;
-void loop() ;
 bool isWifiConnected() ;
 void handleWifiDisconnect(const WiFiEventStationModeDisconnected & event) ;
 void handleWifiConnect(const WiFiEventStationModeGotIP & event) ;
@@ -71,12 +68,11 @@ void onMqttSubscribe(uint16_t packetId, uint8_t qos) ;
 void onMqttUnsubscribe(uint16_t packetId) ;
 void onMqttMessage(char * topic, char * payload, AsyncMqttClientMessageProperties properties, size_t len, size_t index, size_t total) ;
 void onMqttPublish(uint16_t packetId) ;
-void connectToMqtt()  ;
+void connectToMqtt() ;
 void putValueOverMQTT() ;
 void checkResetButtonStartup() ;
 
 #include "IoTFirmware.ino"
 
-#include "IoTSwitchControl.ino"
 
 #endif
