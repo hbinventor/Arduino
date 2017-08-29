@@ -1,3 +1,6 @@
 /.metadata/
 .metadata/.lock
 RemoteSystemsTempFiles/.project
+IoTFirmware/.project
+IoTFirmware/.settings/language.settings.xml
+IoTFirmware/.settings/org.eclipse.cdt.core.prefs
