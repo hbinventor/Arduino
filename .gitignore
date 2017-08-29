@@ -4,9 +4,7 @@ RemoteSystemsTempFiles/.project
 IoTFirmware/.project
 IoTFirmware/.settings/language.settings.xml
 IoTFirmware/.settings/org.eclipse.cdt.core.prefs
-IoTFirmware/.ino.cpp
 IoTFirmware/.cproject
-IoTFirmware/Release/core/core/libb64/subdir.mk
-*.mk
 IoTFirmware/.ino.cpp
-IoTFirmware/.ino.cpp
+IoTFirmware/Release/
+IoTFirmware/core/

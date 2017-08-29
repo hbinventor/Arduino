@@ -14,19 +14,15 @@
 #include "DB.h"
 
 #define TOPIC_PRIVATE_PREFIX	"private"
-class BMQTT: public AsyncMqttClient
+class BMQTT
+		:public Singleton<BMQTT>,
+		 public AsyncMqttClient
 {
 protected:
-	static	BMQTT*	m_instance;
 	void onWifiConnect(const WiFiEventStationModeGotIP & event);
 public:
 	BMQTT();
 	virtual ~BMQTT();
-	static BMQTT *getInstance() {
-		if (m_instance == nullptr)
-			m_instance = new BMQTT();
-		return m_instance;
-	}
 	void init();
 	void putGPIOStatus(int index, int value);
 	void putSensorValue(String type, String value);

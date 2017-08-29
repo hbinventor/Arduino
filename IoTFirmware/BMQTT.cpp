@@ -4,7 +4,6 @@
 
 #include "BMQTT.h"
 
-BMQTT *BMQTT::m_instance = nullptr;
 void BMQTT::init()
 {
 

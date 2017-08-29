@@ -22,7 +22,9 @@ typedef struct BWifiInfo_t{
 	int rssi;
 } BWifiInfo;
 
-class BWifi:public ESP8266WiFiClass, public Singleton<BWifi>
+class BWifi
+		:public Singleton<BWifi>,
+		 public ESP8266WiFiClass
 {
  protected:
 	std::vector<BWifiInfo> WifiList;

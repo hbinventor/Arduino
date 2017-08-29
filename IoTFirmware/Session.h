@@ -9,6 +9,8 @@
 #define SESSION_H_
 
 #include <ESP8266WiFi.h>
+#include <TimeLib.h>
+#include "Configs.h"
 // SESSION
 #define MAX_SESSION  10
 #define SESSION_ID_LENGTH 33

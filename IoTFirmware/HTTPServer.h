@@ -72,10 +72,10 @@ class HTTPServer:
 		public Session
 {
 public:
+	HTTPServer();
 	void start();
 	void init(int port = 80);
 protected:
-	HTTPServer();
 	virtual ~HTTPServer();
 	static AsyncWebServer *_server;
 	String _body;

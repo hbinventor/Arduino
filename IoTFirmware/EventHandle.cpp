@@ -9,7 +9,7 @@
 
 EventHandle::EventHandle() {
 	// TODO Auto-generated constructor stub
-	BMQTT::getInstance()->onMessage(
+	BMQTT::instance()->onMessage(
 			std::bind(&EventHandle::onMqttMessage,this,
 			std::placeholders::_1,
 			std::placeholders::_2,

@@ -44,6 +44,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Time}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/DHT}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.cpp.sketch.input.1808899402" name="CPP source files" superClass="io.sloeber.compiler.cpp.sketch.input"/>
 							</tool>
@@ -74,6 +75,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Time}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/DHT}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.c.sketch.input.279834401" name="C Source Files" superClass="io.sloeber.compiler.c.sketch.input"/>
 							</tool>
@@ -104,6 +106,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Time}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/DHT}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.S.sketch.input.2049129695" name="Assembly source files" superClass="io.sloeber.compiler.S.sketch.input"/>
 							</tool>
@@ -129,4 +132,5 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+	<storageModule moduleId="refreshScope"/>
 </cproject>

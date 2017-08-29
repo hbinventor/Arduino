@@ -24,6 +24,7 @@ RM := del
 -include libraries\ESP8266HTTPClient\src\subdir.mk
 -include libraries\EEPROM\subdir.mk
 -include libraries\DNSServer\src\subdir.mk
+-include libraries\DHT\subdir.mk
 -include core\core\umm_malloc\subdir.mk
 -include core\core\spiffs\subdir.mk
 -include core\core\libb64\subdir.mk

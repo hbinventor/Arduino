@@ -49,7 +49,7 @@
 
 #define gDB	DB::instance()
 #define gWF	WifiManager::instance()
-#define	gHTTP	HTTPServer::getInstance()
+#define	gHTTP	HTTPServer::instance()
 #define	gTime	TimeService::instance()
 
 /************************************************************************
@@ -231,23 +231,23 @@ void startAPMode() {
 void MQTTInit()
 {
 	// Thiet lap cac handle MQTT
-	BMQTT::getInstance()->onConnect(onMqttConnect);
-	BMQTT::getInstance()->onConnect(onMqttConnect);
-	BMQTT::getInstance()->onDisconnect(onMqttDisconnect);
-	BMQTT::getInstance()->onSubscribe(onMqttSubscribe);
-	BMQTT::getInstance()->onUnsubscribe(onMqttUnsubscribe);
-	BMQTT::getInstance()->onMessage(onMqttMessage);
-	BMQTT::getInstance()->onPublish(onMqttPublish);
+	BMQTT::instance()->onConnect(onMqttConnect);
+	BMQTT::instance()->onConnect(onMqttConnect);
+	BMQTT::instance()->onDisconnect(onMqttDisconnect);
+	BMQTT::instance()->onSubscribe(onMqttSubscribe);
+	BMQTT::instance()->onUnsubscribe(onMqttUnsubscribe);
+	BMQTT::instance()->onMessage(onMqttMessage);
+	BMQTT::instance()->onPublish(onMqttPublish);
 	// Thiet lap cho MQTT Client
-	BMQTT::getInstance()->setServer(gDB->getMQTTBroker().c_str(), gDB->getMQTTPort());
-	BMQTT::getInstance()->setCredentials(gDB->getMQTTUsername().c_str(), gDB->getMQTTPassword().c_str());
+	BMQTT::instance()->setServer(gDB->getMQTTBroker().c_str(), gDB->getMQTTPort());
+	BMQTT::instance()->setCredentials(gDB->getMQTTUsername().c_str(), gDB->getMQTTPassword().c_str());
 }
 // Handle on MQTT connect to broker
 void onMqttConnect(bool sessionPresent)
 {
 	DBGF("Connected to MQTT.");
 	DBG2F("Session present: ", sessionPresent);
-	BMQTT::getInstance()->listen();
+	BMQTT::instance()->listen();
 	/*
 	uint16_t packetIdSub = mqttClient.subscribe("test/lol", 2);
 	Serial.print("Subscribing at QoS 2, packetId: ");
@@ -318,7 +318,7 @@ void onMqttPublish(uint16_t packetId)
 void connectToMqtt()
 {
 	DBGF("Connecting to MQTT...");
-	BMQTT::getInstance()->connect();
+	BMQTT::instance()->connect();
 }
 // Put value to Device Topic
 void putValueOverMQTT()
