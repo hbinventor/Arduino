@@ -74,15 +74,15 @@ class HTTPServer:
 public:
 	HTTPServer();
 	void start();
-	void init(int port = 80);
+	void init();
+	int getClientRole(AsyncWebServerRequest * request);
 protected:
 	virtual ~HTTPServer();
-	static AsyncWebServer *_server;
 	String _body;
 	int _getBody;
-	int getUserRole(AsyncWebServerRequest * request);
+
 	String getClientCookie(AsyncWebServerRequest * request);
-	String createCookieString(int role);
+	String newCookieString(int role);
 
 	void handleLogin(AsyncWebServerRequest *request);
 	void handleLogout(AsyncWebServerRequest *request);

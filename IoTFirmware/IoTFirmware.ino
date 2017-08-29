@@ -102,7 +102,7 @@ void setup() {
 		return;
 	}
 	// Thiet lap port cho HTTP server
-	gHTTP->init(gDB->getHTTPPort());
+	gHTTP->begin();
 
 	// Cac handle phat hien wifi event
 	BWifi::instance()->onStationModeGotIP(handleWifiConnect);

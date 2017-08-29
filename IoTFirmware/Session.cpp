@@ -16,96 +16,69 @@ Session::~Session() {
 	// TODO Auto-generated destructor stub
 }
 
-void Session::startSession() {
-	numSession = 0;
-	SS = new SessionParam[1];
-	strcpy(SS[0].name, "");
-	SS[0].role = -1;
+String Session::create(int role) {
+	if(_SESSION.size() >= MAX_SESSION)	return String("");
+	SessionParam newSS;
+	strcpy(newSS.name, randomString().c_str());
+	newSS.time = now();
+	newSS.role = role;
+	_SESSION.push_back(newSS);
+	return newSS.name;
 }
 
-String Session::createSS(int role) {
-	if(numSession == MAX_SESSION)	return String("");
-	numSession++;
-	if(numSession==1){
-		strcpy(SS[0].name, getRandomString().c_str());
-		SS[0].role = role;
-		SS[0].time = now();
-		return String(SS[0].name);
-	}else if(numSession>1){
-		SessionParam *newSS = new SessionParam[numSession];
-		for(int i=0; i< numSession-1; i++){
-			newSS[i] = SS[i];
-		}
-		strcpy(newSS[numSession-1].name, getRandomString().c_str());
-		newSS[numSession-1].time = now();
-		newSS[numSession-1].role = role;
-		delete SS;
-		SS = newSS;
-		DBG2F("New Session: ", SS[numSession-1].name);
-		return String(SS[numSession-1].name);
-	}
-}
-
-void Session::deleteSS(String session) {
-	if(numSession < 1) return;
-	if(numSession == 1){
-		numSession = 0;
-		return;
-	}
-	SessionParam *newSS = new SessionParam[numSession - 1];
-	int j=0;
-	for(int i=0; i< numSession; i++){
-		if(session!=String(SS[i].name)){
-			newSS[j++] = SS[i];
+void Session::remove(String session) {
+	int size = _SESSION.size();
+	for(int i=0; i<size; i++){
+		if(session.equalsIgnoreCase(_SESSION[i].name)){
+			_SESSION.erase(_SESSION.begin() + i);
 		}
 	}
-	delete SS;
-	SS = newSS;
-	numSession--;
 }
 
 
-int Session::getSSUserRole(String session) {
-	if((numSession < 1)||(session.length()<32)) return -1;
-	checkSSExpireTime();
+int Session::getRole(String session) {
+	int size = _SESSION.size();
+	if(size <=0 ||(session.length()<32)) return -1;
+	checkExpired();
 	int retRole = -1;
-	for(int i=0; i< numSession; i++){
-		if(session==String(SS[i].name)){
-			SS[i].time = now();
-			retRole = SS[i].role;
+	for(int i=0; i<size; i++){
+		if(session.equalsIgnoreCase(_SESSION[i].name)){
+			_SESSION[i].time = now();
+			retRole = _SESSION[i].role;
 		}
 	}
 	return retRole;
 }
 
-int Session::setSSUserRole(String session, int role) {
-	for(int i=0; i< numSession; i++)
-	{
-		if(session.equalsIgnoreCase(SS[i].name)){
-			SS[i].role = role;
-			return SS[i].role;
+int Session::setRole(String session, int role) {
+	int size = _SESSION.size();
+	for(int i=0; i<size; i++){
+		if(session.equalsIgnoreCase(_SESSION[i].name)){
+			_SESSION[i].role = role;
+			return _SESSION[i].role;
 		}
 	}
 	return 0;
 }
 
-void Session::checkSSExpireTime() {
-	if(numSession < 1){
+void Session::checkExpired() {
+	int size = _SESSION.size();
+	if(size<=0){
 		DBGF("No has Session");
 		return;
-	}
-	time_t cur = now();
-	for(int i=0; i< numSession; i++){
-		DBG2F0("Session ", i);
-		DBG2F("==> ", SS[i].name);
-		if((second(cur) - second(SS[i].time)) > SESSION_EXPIRE_TIME){
-			DBG2F("Delete Session expired: ", i);
-			deleteSS(SS[i].name);
-			i--;
+	}else {
+		time_t cur = now();
+		for(int i=0; i<size; i++){
+			DBG2F0("Session ", i);
+			DBG2F("==> ", _SESSION[i].name);
+			if((second(cur) - second(_SESSION[i].time)) > SESSION_EXPIRE_TIME){
+				DBG2F("Delete Session expired: ", i);
+				_SESSION.erase(_SESSION.begin() + i);
+			}
 		}
 	}
 }
-String Session::getRandomString() {
+String Session::randomString() {
 	MD5Builder md5;
 	md5.begin();
 	md5.add(String(random(0x7fffffff)));
