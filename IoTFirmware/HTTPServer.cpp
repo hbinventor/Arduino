@@ -12,24 +12,6 @@ HTTPServer::HTTPServer():AsyncWebServer(DB::instance()->getHTTPPort())
 
 void HTTPServer::init()
 {
-	on("/favicon.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, favicon_png, MimePNG, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/js/jquery-3.1.0.min.js.gz", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, jquery_3_1_0_min_js_gz, MimeTypeJS, GZIP_ENABLE, BROWSER_CACHE_DAYS); });
-	on("/js/md5.min.js.gz", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, md5_min_js_gz, MimeTypeJS, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/js/main.js", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, main_js, MimeTypeJS, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/css/main.css", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, main_css, MimeCss, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/admin.htm", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, admin_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/device.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, device_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/email.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, email_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/gpio.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, gpio_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/login.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, login_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/network.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, network_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/settings.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, settings_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/time.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, time_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/co22.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, co22_png, MimePNG, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/fire1.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, fire1_png, MimePNG, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/hum2.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, hum22_png, MimePNG, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/temp1.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, temp1_png, MimePNG, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-
 	////on("/js/ionic.bundle.min.js", HTTP_ANY, [&](AsyncWebServerRequest *request) {AsyncWebserverEx::sendFile(request, "/js/ionic.bundle.min.js.gz", MimeTypeJS, GZIP_ENABLE, BROWSER_CACHE_DAYS); });
 	////on("/css/ionic.min.css", HTTP_ANY, [&](AsyncWebServerRequest *request) {AsyncWebserverEx::sendFile(request, "/css/ionic.min.css.gz", MimeCss, GZIP_ENABLE, BROWSER_CACHE_DAYS); });
 	////on("/css/main.js", HTTP_ANY, [&](AsyncWebServerRequest *request) {AsyncWebserverEx::sendFile(request, "/js/main.js", MimeTypeJS, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
@@ -40,11 +22,6 @@ void HTTPServer::init()
 	////on(PATH_LOGIN, std::bind(&AsyncWebserverEx::handleLogin, this, std::placeholders::_1));
 	////on(PATH_LOGOUT, std::bind(&AsyncWebserverEx::handleLogout, this, std::placeholders::_1));
 	//on(PATH_AJAX, std::bind(&AsyncWebserverEx::handleAjax, this, std::placeholders::_1));
-
-	onNotFound(std::bind(&HTTPServer::handleNotFound, this, std::placeholders::_1));
-	onRequestBody([&](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total) {
-		handleBody(request, data, len, index, total);
-	});
 	//onRequestBody(std::bind(&AsyncWebserverEx::handleBody, this, std::placeholders::_1));
 	//onRequestBody(std::bind(&AsyncWebserverEx::handleBody, this, std::placeholders::_1));
 	//onFileUpload(std::bind(&AsyncWebserverEx::handleUpload, this, std::placeholders::_1));
@@ -64,9 +41,9 @@ void HTTPServer::start()
 /*
  * Lay role tu cookie:
  * Role nay duoc quan ly trong class Session
- * return: 1: admin, 2: user, -1: khong login
+ * return:NONE, USER, ADMIN
  * */
-int HTTPServer::getClientRole(AsyncWebServerRequest * request)
+USER_ROLE HTTPServer::getClientRole(AsyncWebServerRequest * request)
 {
 	return Session::getRole(getClientCookie(request));
 }
@@ -97,7 +74,7 @@ String HTTPServer::getClientCookie(AsyncWebServerRequest * request)
  * Tao chuoi Cookie de add vao header gui toi client
  * Chuoi nay duoc quan ly trong class session
  * return: chuoi header: hbid=12345678901234567890123456789012; Path=/; Max-Age= 86400L*/
-String HTTPServer::newCookieString(int role)
+String HTTPServer::newCookieString(USER_ROLE role)
 {
 	String cookie;
 	String ssName = Session::create(role);
@@ -113,65 +90,95 @@ String HTTPServer::newCookieString(int role)
 }
 
 /*
+ * Xu ly cac trang khong tim thay
+ * Error code 404
+ * */
+void HTTPServer::handleNotFound(AsyncWebServerRequest * request)
+{
+	/*	Handle Unknown Request	*/
+	request->send(404);
+}
+
+/*
  * Xu ly login tu client
  * */
 void HTTPServer::handleLogin(AsyncWebServerRequest * request)
 {
-	int role = getClientRole(request);
-	if (role>0)
+	/* Lay client role tu cookie	*/
+	USER_ROLE clientRole = getClientRole(request);
+	/* neu da dang nhap (ROLE != NONE --- ADMIN or USER) thi chuyen huong den trang chu	*/
+	if (clientRole > NONE)
 	{
 		request->redirect(PATH_ROOT);
 		return;
 	}
+	/* neu request gui len chua du thong tin user va password thi load lai trang login	*/
 	if (!request->hasParam(PAR_USERNAME)|| !request->hasParam(PAR_PASSWORD))
 	{
 		request->redirect(PATH_LOGIN);
 		return;
 	}
+
+	/*	 Neu da day du thong tin request: usernam, password, chua dang nhap thi xu ly login */
 	else
 	{
+		/* lay request param username va password	*/
 		AsyncWebParameter* p = request->getParam(PAR_USERNAME);
 		String username = p->value();
 		p = request->getParam(PAR_PASSWORD);
 		String password = p->value();
+
+		/* Khoi tao chuoi json tra ve */
 		AsyncResponseStream *response = request->beginResponseStream("text/json");
 		DynamicJsonBuffer jsonBuffer;
 		JsonObject &root = jsonBuffer.createObject();
+
+		/* Check username: user login*/
 		if (username == "user") {
+			/*	Neu dung username: user va password*/
 			if (password == DB::instance()->getLoginPassword())
 			{
-				response->addHeader(HEADER_SET_COOKIE, newCookieString(USER_ROLE));
-				root[PAR_STATUS] = STT_OK;
+				/* Tra lai client chuoi json: {"status": true}	*/
+				response->addHeader("Set-Cookie", newCookieString(USER));
+				root["status"] = true;
 				root.printTo(*response);
 				request->send(response);
 			}
+			/*	Neu sai thong tin dang nhap*/
 			else
 			{
+				/* Tra lai client chuoi json: {"status": false}	*/
 				response->addHeader(HEADER_CONNECTION, "close");
-				root[PAR_STATUS] = STT_WRONG_PASS;
+				root["status"] = false;
 				root.printTo(*response);
 				request->send(response);
 			}
 		}
+		/* Check username: admin login*/
 		else if (username == "admin") {
+			/*	Neu dung username: admin va password*/
 			if (password == DB::instance()->getLoginPassword(true))
 			{
-				response->addHeader(HEADER_SET_COOKIE, newCookieString(ADMIN_ROLE));
+				/* Tra lai client chuoi json: {"status": true}	*/
+				response->addHeader("Set-Cookie", newCookieString(ADMIN));
 				root[PAR_STATUS] = STT_OK;
 				root.printTo(*response);
 				request->send(response);
 			}
+			/*	Neu sai thong tin dang nhap*/
 			else
 			{
+				/* Tra lai client chuoi json: {"status": false}	*/
 				response->addHeader(HEADER_CONNECTION, "close");
 				root[PAR_STATUS] = STT_WRONG_PASS;
 				root.printTo(*response);
 				request->send(response);
 			}
 		}
+		/* Neu username khac user hoac admin, tra lai client chuoi json: {"status": false}*/
 		else {
 			response->addHeader(HEADER_CONNECTION, "close");
-			root[PAR_STATUS] = STT_WRONG_USER;
+			root["status"] = false;
 			root.printTo(*response);
 			request->send(response);
 		}
@@ -182,12 +189,14 @@ void HTTPServer::handleLogin(AsyncWebServerRequest * request)
  * Xu ly client logout*/
 void HTTPServer::handleLogout(AsyncWebServerRequest * request)
 {
-	// Lay cookie
+	/*	Lay session trong client cookie */
 	String ss = getClientCookie(request);
 	DBG2F("Logout => Delete Session: ", ss);
-	// Xoa session cua client
+
+	/* Xoa session cua client	*/
 	Session::remove(ss);
-	// Dieu huong den trang Login
+
+	/* Dieu huong den trang Login	*/
 	request->redirect(PATH_LOGIN);
 }
 
@@ -196,7 +205,7 @@ void HTTPServer::handleAjax(AsyncWebServerRequest * request)
 	AsyncResponseStream *response = request->beginResponseStream("text/json");
 	DynamicJsonBuffer jsonBuffer;
 	JsonObject &root = jsonBuffer.createObject();
-	int role = getClientRole(request);
+	USER_ROLE role = getClientRole(request);
 	if (role<=0 || !request->hasParam(PAR_USERNAME))
 	{
 		root[PAR_STATUS] = "false";
@@ -210,12 +219,6 @@ void HTTPServer::handleAjax(AsyncWebServerRequest * request)
 		String username = command->value();
 
 	}
-}
-
-void HTTPServer::handleNotFound(AsyncWebServerRequest * request)
-{
-	//Handle Unknown Request
-	request->send(404);
 }
 
 void HTTPServer::handleBody(AsyncWebServerRequest * request, uint8_t * data, size_t len, size_t index, size_t total)
@@ -270,3 +273,8 @@ void HTTPServer::sendFile(AsyncWebServerRequest *request, const char * filename,
 	request->send(response);
 }
 
+void HTTPServer::sendGzipFile(AsyncWebServerRequest* request,
+		const char* filename, const char* content_type, bool needLogin,
+		unsigned long expire) {
+	sendFile(request, filename, content_type, true, needLogin, expire);
+}

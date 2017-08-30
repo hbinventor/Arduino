@@ -17,11 +17,16 @@
 #define SESSION_ID_LENGTH 33
 #define SESSION_EXPIRE_TIME   (600) //  seconds
 
+typedef enum USER_ROLE_t{
+	NONE = 0,
+	USER,
+	ADMIN
+} USER_ROLE;
 
 typedef struct __attribute__((packed)) SessionParam_t{
 	char name[SESSION_ID_LENGTH];
-	int role;
-	time_t time;
+	time_t expired;
+	USER_ROLE role;
 } SessionParam;
 
 class Session{
@@ -30,10 +35,10 @@ private:
 public:
 	Session();
 	virtual ~Session();
-	String create(int role);
+	String create(USER_ROLE role);
 	void remove(String session);
-	int getRole(String session);
-	int setRole(String session, int role);
+	USER_ROLE getRole(String session);
+	USER_ROLE setRole(String session, USER_ROLE role);
 	static String randomString();
 	void checkExpired();
 };

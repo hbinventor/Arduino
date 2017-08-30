@@ -75,21 +75,22 @@ public:
 	HTTPServer();
 	void start();
 	void init();
-	int getClientRole(AsyncWebServerRequest * request);
+	USER_ROLE getClientRole(AsyncWebServerRequest * request);
 protected:
 	virtual ~HTTPServer();
 	String _body;
 	int _getBody;
 
 	String getClientCookie(AsyncWebServerRequest * request);
-	String newCookieString(int role);
+	String newCookieString(USER_ROLE role);
 
+	void handleNotFound(AsyncWebServerRequest *request);
 	void handleLogin(AsyncWebServerRequest *request);
 	void handleLogout(AsyncWebServerRequest *request);
 	void handleAjax(AsyncWebServerRequest * request);
-	void handleNotFound(AsyncWebServerRequest *request);
 	void handleBody(AsyncWebServerRequest  *request, uint8_t *data, size_t len, size_t index, size_t total);
-	void sendFile(AsyncWebServerRequest *request,const char * filename, const char *content_type = (const char *) 0, bool isGzip = false, bool needLogin=false, unsigned long expire = 0UL);
+	void sendFile(AsyncWebServerRequest *request, const char * filename, const char *content_type = (const char *) 0, bool isGzip = false, bool needLogin=false, unsigned long expire = 0UL);
+	void sendGzipFile(AsyncWebServerRequest *request, const char * filename,  const char *content_type = (const char *) 0, bool needLogin=false, unsigned long expire = 0UL);
 
 };
 

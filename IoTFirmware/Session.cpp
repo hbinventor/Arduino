@@ -16,11 +16,11 @@ Session::~Session() {
 	// TODO Auto-generated destructor stub
 }
 
-String Session::create(int role) {
+String Session::create(USER_ROLE role) {
 	if(_SESSION.size() >= MAX_SESSION)	return String("");
 	SessionParam newSS;
 	strcpy(newSS.name, randomString().c_str());
-	newSS.time = now();
+	newSS.expired = now() + SESSION_EXPIRE_TIME;
 	newSS.role = role;
 	_SESSION.push_back(newSS);
 	return newSS.name;
@@ -36,29 +36,31 @@ void Session::remove(String session) {
 }
 
 
-int Session::getRole(String session) {
+USER_ROLE Session::getRole(String session) {
 	int size = _SESSION.size();
-	if(size <=0 ||(session.length()<32)) return -1;
+	if(size <=0 ||(session.length()<32)) return NONE;
 	checkExpired();
-	int retRole = -1;
+	USER_ROLE retRole = NONE;
 	for(int i=0; i<size; i++){
 		if(session.equalsIgnoreCase(_SESSION[i].name)){
-			_SESSION[i].time = now();
+			_SESSION[i].expired = now() + SESSION_EXPIRE_TIME;
 			retRole = _SESSION[i].role;
+			return retRole;
 		}
 	}
 	return retRole;
 }
 
-int Session::setRole(String session, int role) {
+USER_ROLE Session::setRole(String session, USER_ROLE role) {
 	int size = _SESSION.size();
 	for(int i=0; i<size; i++){
 		if(session.equalsIgnoreCase(_SESSION[i].name)){
 			_SESSION[i].role = role;
+			_SESSION[i].expired = now() + SESSION_EXPIRE_TIME;
 			return _SESSION[i].role;
 		}
 	}
-	return 0;
+	return NONE;
 }
 
 void Session::checkExpired() {
@@ -71,7 +73,7 @@ void Session::checkExpired() {
 		for(int i=0; i<size; i++){
 			DBG2F0("Session ", i);
 			DBG2F("==> ", _SESSION[i].name);
-			if((second(cur) - second(_SESSION[i].time)) > SESSION_EXPIRE_TIME){
+			if(cur > _SESSION[i].expired){
 				DBG2F("Delete Session expired: ", i);
 				_SESSION.erase(_SESSION.begin() + i);
 			}

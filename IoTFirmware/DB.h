@@ -9,8 +9,6 @@
 ************** 	Kich thuoc cac bien trong EEPROM		********
 *******************************************************************/
 #define SETTING_BLOCK_START   0
-#define ADMIN_ROLE   1
-#define USER_ROLE    2
 #define CHECKSUM_LEN 32
 #define DEVICE_NAME_LEN 32
 #define DEVICE_TYPE_LEN 16

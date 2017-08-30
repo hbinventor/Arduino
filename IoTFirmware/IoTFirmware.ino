@@ -102,6 +102,28 @@ void setup() {
 		return;
 	}
 	// Thiet lap port cho HTTP server
+	gHTTP->on("/favicon.png", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendFile(request, favicon_png, MimePNG, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
+	on("/favicon.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, favicon_png, MimePNG, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
+	on("/js/jquery-3.1.0.min.js.gz", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, jquery_3_1_0_min_js_gz, MimeTypeJS, GZIP_ENABLE, BROWSER_CACHE_DAYS); });
+	on("/js/md5.min.js.gz", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, md5_min_js_gz, MimeTypeJS, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
+	on("/js/main.js", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, main_js, MimeTypeJS, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
+	on("/css/main.css", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, main_css, MimeCss, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
+	on("/admin.htm", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, admin_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
+	on("/device.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, device_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
+	on("/email.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, email_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
+	on("/gpio.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, gpio_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
+	on("/login.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, login_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
+	on("/network.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, network_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
+	on("/settings.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, settings_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
+	on("/time.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, time_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
+	on("/co22.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, co22_png, MimePNG, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
+	on("/fire1.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, fire1_png, MimePNG, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
+	on("/hum2.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, hum22_png, MimePNG, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
+	on("/temp1.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, temp1_png, MimePNG, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
+	onNotFound(std::bind(&HTTPServer::handleNotFound, this, std::placeholders::_1));
+	onRequestBody([&](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total) {
+		handleBody(request, data, len, index, total);
+	});
 	gHTTP->begin();
 
 	// Cac handle phat hien wifi event
