@@ -10,11 +10,11 @@
 #include "Singleton.h"
 #include "Configs.h"
 #include <ESP8266WiFi.h>
-#include <WiFiUdp.h>
 #include <ESPAsyncUDP.h>
 #include <TimeLib.h>
 #include <Timezone.h>
 #include <ArduinoJson.h>
+#include "DB.h"
 
 #define NTP_LOCAL_PORT 2395      // local port to listen for UDP packets
 #define NTP_PACKET_SIZE 48 // NTP time stamp is in the first 48 bytes of the message
@@ -106,15 +106,11 @@ class TimeService:public Singleton<TimeService> {
 public:
 	TimeService();
 	virtual ~TimeService();
-	void setNTPServer(const char *server);
-	bool setTimeZone(int zoneID);
 	time_t static getLocalTime(int timeZoneIndex);
 	void toJsonString(String& result);
 	bool Sync();
 	bool AutoSync(time_t ifSyncOK = 14400, time_t ifSyncFailed = 300);
 protected:
-	String ntpServerName;
-	static int TimeZoneID;
 	byte* packetBuffer;
 	time_t lastSync;
 	time_t resyncPeriod;

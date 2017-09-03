@@ -18,6 +18,26 @@
 #include <TimeLib.h>
 
 #include "DB.h"
+
+// HTML static file
+#include "html/favicon.png.h"
+#include "html/co22.png.h"
+#include "html/fire1.png.h"
+#include "html/hum2.png.h"
+#include "html/temp1.png.h"
+#include "html/jquery-3.1.0.min.js.gz.h"
+#include "html/md5.min.js.gz.h"
+#include "html/main.js.h"
+#include "html/main.css.h"
+#include "html/admin.html.h"
+#include "html/device.html.h"
+#include "html/email.html.h"
+#include "html/general.html.h"
+#include "html/gpio.html.h"
+#include "html/login.html.h"
+#include "html/network.html.h"
+#include "html/settings.html.h"
+#include "html/time.html.h"
  // HTTP
 
 #define BROWSER_CACHE_DAYS	864000 // cache for 10 days

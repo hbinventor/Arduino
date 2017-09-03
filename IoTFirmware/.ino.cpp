@@ -2,7 +2,7 @@
 //This is a automatic generated file
 //Please do not modify this file
 //If you touch this file your change will be overwritten during the next build
-//This file has been generated on 2017-09-03 15:21:07
+//This file has been generated on 2017-09-03 15:58:28
 
 #include "Arduino.h"
 #include <ESP8266WiFi.h>
@@ -56,7 +56,6 @@ void onMqttUnsubscribe(uint16_t packetId) ;
 void onMqttMessage(char * topic, char * payload, AsyncMqttClientMessageProperties properties, size_t len, size_t index, size_t total) ;
 void onMqttPublish(uint16_t packetId) ;
 void connectToMqtt() ;
-void WebServerInit() ;
 void handleRoot(AsyncWebServerRequest* request) ;
 void putValueOverMQTT() ;
 void checkResetButtonStartup() ;

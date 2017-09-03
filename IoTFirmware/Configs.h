@@ -42,6 +42,13 @@
 #define HBOS_UPDATE_PATH	"/iotupdate/esp8266.php"
 
 
+/*
+ * Cac khai bao su dung cac module
+ * */
+
+#define	USE_TIMEZONE
+#define USE_MQTT
+
 
 /* Cau truc vung nho EEPROM:
  * 0 - 128: Device setting chua du lieu truy xuat nguon goc:
@@ -160,7 +167,5 @@ static const char JsonStatusTrue[] = "{\"status\":true}";
 static const char JsonStatusFalse[] = "{\"status\":false}";
 
 static const char adminUser[] = "admin";
-
-
 
 #endif /* CONFIGS_H_ */

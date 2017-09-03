@@ -65,7 +65,6 @@ void DNSServerStart();
 void DNSServerStop();
 
 // Webserver
-void WebServerInit();
 void handleRoot(AsyncWebServerRequest *request);
 // MQTT
 Ticker MQTTTicker;
@@ -94,16 +93,12 @@ void setup() {
 		return;
 	}
 
-	// Thiet lap port cho HTTP server
-	WebServerInit();
-
 	// Cac handle phat hien wifi event
 	WiFi.onStationModeGotIP(handleWifiConnect);
 	WiFi.onStationModeDisconnected(handleWifiDisconnect);
 
-	// Thiet lap TimeService: Time server va Timezone
-	gTime->setNTPServer(gDB->getTimeServer().c_str());
-	gTime->setTimeZone(gDB->getTimeZone());
+	// Thiet lap port cho HTTP server
+	gHTTP->begin();
 
 	MQTTInit();
 
@@ -312,42 +307,6 @@ void connectToMqtt()
 {
 	DBGF("Connecting to MQTT...");
 	BMQTT::instance()->connect();
-}
-
-/*
- * Khoi dong Webserver, thiet lap duong dan den cac file
- * */
-void WebServerInit() {
-	// Static file
-	gHTTP->on("/favicon.png", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, favicon_png, MimePNG, false); });
-	gHTTP->on("/co22.png", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, co22_png, MimePNG, false); });
-	gHTTP->on("/fire1.png", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, fire1_png, MimePNG, false); });
-	gHTTP->on("/hum2.png", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, hum22_png, MimePNG, false); });
-	gHTTP->on("/temp1.png", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, temp1_png, MimePNG, false); });
-	gHTTP->on("/js/jquery-3.1.0.min.js.gz", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, jquery_3_1_0_min_js_gz, MimeTypeJS); });
-	gHTTP->on("/js/md5.min.js.gz", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, md5_min_js_gz, MimeTypeJS); });
-	gHTTP->on("/js/main.js", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, main_js, MimeTypeJS, false); });
-	gHTTP->on("/css/main.css", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, main_css, MimeCss, false); });
-	gHTTP->on("/admin.htm", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, admin_html, MimeHtml, false); });
-	gHTTP->on("/device.htm", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, device_html, MimeHtml, false); });
-	gHTTP->on("/email.htm", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, email_html, MimeHtml, false); });
-	gHTTP->on("/gpio.htm", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, gpio_html, MimeHtml, false); });
-	gHTTP->on("/login.htm", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, login_html, MimeHtml, false); });
-	gHTTP->on("/network.htm", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, network_html, MimeHtml, false); });
-	gHTTP->on("/settings.htm", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, settings_html, MimeHtml, false); });
-	gHTTP->on("/time.htm", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, time_html, MimeHtml, false); });
-
-	// Ajax
-
-	// Root and notfound 404
-	gHTTP->on(PATH_ROOT, HTTP_ANY, handleRoot);
-	gHTTP->onNotFound(std::bind(&gHTTP->handleNotFound, std::placeholders::_1));
-	//gHTTP->onRequestBody([&](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total) {
-		//gHTTP->handleBody(request, data, len, index, total);
-	//});
-
-	// Bat dau lang nghe
-	gHTTP->begin();
 }
 
 void handleRoot(AsyncWebServerRequest* request) {

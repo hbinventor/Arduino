@@ -8,6 +8,29 @@
 #include "BWebServer.h"
 BWebServer::BWebServer():AsyncWebServer(DB::instance()->getHTTPPort())
 {
+	// Static file
+	on("/favicon.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, favicon_png, MimePNG, false); });
+	on("/co22.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, co22_png, MimePNG, false); });
+	on("/fire1.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, fire1_png, MimePNG, false); });
+	on("/hum2.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, hum22_png, MimePNG, false); });
+	on("/temp1.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, temp1_png, MimePNG, false); });
+	on("/js/jquery-3.1.0.min.js.gz", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, jquery_3_1_0_min_js_gz, MimeTypeJS); });
+	on("/js/md5.min.js.gz", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, md5_min_js_gz, MimeTypeJS); });
+	on("/js/main.js", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, main_js, MimeTypeJS, false); });
+	on("/css/main.css", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, main_css, MimeCss, false); });
+	on("/admin.htm", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, admin_html, MimeHtml, false); });
+	on("/device.htm", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, device_html, MimeHtml, false); });
+	on("/email.htm", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, email_html, MimeHtml, false); });
+	on("/gpio.htm", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, gpio_html, MimeHtml, false); });
+	on("/login.htm", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, login_html, MimeHtml, false); });
+	on("/network.htm", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, network_html, MimeHtml, false); });
+	on("/settings.htm", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, settings_html, MimeHtml, false); });
+	on("/time.htm", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, time_html, MimeHtml, false); });
+	on("/index.htm", HTTP_ANY, [&](AsyncWebServerRequest *request) {BWebServer::sendStaticFile(request, admin_html, MimeHtml, false); });
+
+	onNotFound(std::bind(&BWebServer::handleNotFound, this, std::placeholders::_1));
+	// Ajax
+
 }
 
 void BWebServer::init()

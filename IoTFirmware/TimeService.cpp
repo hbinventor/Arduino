@@ -7,11 +7,8 @@
 
 #include "TimeService.h"
 
-int TimeService::TimeZoneID = 30;
-
 TimeService::TimeService() {
 	// TODO Auto-generated constructor stub
-	ntpServerName = "pool.ntp.org";
 	packetBuffer = (byte*)malloc(NTP_PACKET_SIZE);
 	lastSync = 0;
 	resyncPeriod = 0;
@@ -22,18 +19,17 @@ TimeService::~TimeService() {
 	if ( packetBuffer ) free(packetBuffer);
 }
 
-void TimeService::setNTPServer(const char* server) {
-	if ( server==NULL || !server[0]) return;
-	ntpServerName = server;
-}
-
 bool TimeService::AutoSync(time_t ifSyncOK, time_t ifSyncFailed) {
+	/*	Kiem tra xem co phai thoi diem dong bo thoi gian khong,
+	 * neu dung thoi diem thi dong bo*/
 	if ( now() > resyncPeriod ) {
 		if ( Sync() ) {
+			/*	Neu dong bo thanh cong thi set next time sync sau ifSyncOK second*/
 			resyncPeriod = now() + ifSyncOK;
 		}
 		else
 		{
+			/*	Neu dong bo that bai thi set next time sync sau ifSyncFailed second, thuong gia tri nay < ifSyncOK*/
 			resyncPeriod = now() + ifSyncFailed;
 			return false;
 		}
@@ -43,11 +39,12 @@ bool TimeService::AutoSync(time_t ifSyncOK, time_t ifSyncFailed) {
 
 bool TimeService::Sync() {
 	AsyncUDP udp;
-
+	/*	mo cong lang nghe goi tin UDP*/
 	if ( !udp.listen(NTP_LOCAL_PORT) ) {
 		DBG("Cannot listen for UDP");
 		return false;
 	}
+	/*	Neu mo cong thanh cong*/
 	udp.onPacket([&](AsyncUDPPacket packet) {
 		if (packet.length() >= NTP_PACKET_SIZE) {
 			DBG("-- Received NTP Response");
@@ -94,12 +91,12 @@ bool TimeService::sendNTPpacket(AsyncUDP& udp) {
 	}
 	// resolve NTP server name.
 	IPAddress address;
-	if ( WiFi.hostByName(ntpServerName.c_str(), address)!=1 ) {
-		DBG2F("Cannot resolve host: ",ntpServerName);
+	if ( WiFi.hostByName(DB::instance()->getTimeServer().c_str(), address)!=1 ) {
+		DBG2F("Cannot resolve host: ", DB::instance()->getTimeServer());
 		return false;
 	}
 
-	DBG2F("sending NTP packet...",ntpServerName);
+	DBG2F("sending NTP packet...", DB::instance()->getTimeServer());
 	// set all bytes in the buffer to 0
 	memset(packetBuffer, 0, NTP_PACKET_SIZE);
 	// Initialize values needed to form NTP request
@@ -119,11 +116,6 @@ bool TimeService::sendNTPpacket(AsyncUDP& udp) {
 	udp.connect(address, 123); //NTP requests are to port 123
 	udp.write(packetBuffer, NTP_PACKET_SIZE);
 	//udp.endPacket();
-	return true;
-}
-bool TimeService::setTimeZone(int zoneID) {
-	if ( zoneID<0 || zoneID>=MAX_TIMEZONE_TABLE ) return false;
-	TimeZoneID = zoneID;
 	return true;
 }
 
@@ -155,9 +147,9 @@ time_t TimeService::getLocalTime(int timeZoneIndex) {
 void TimeService::toJsonString(String& result) {
 	StaticJsonBuffer<150> jsonBuffer;
 	JsonObject& root = jsonBuffer.createObject();
-	root["server"] = ntpServerName;
-	root["time"] = (unsigned long)(getLocalTime(TimeZoneID));
-	root["zone"] = TimeZoneID;
+	root["server"] = DB::instance()->getTimeServer().c_str();
+	root["time"] = (unsigned long)(getLocalTime(DB::instance()->getTimeZone()));
+	root["zone"] = DB::instance()->getTimeZone();
 	root.printTo(result);
 }
 
