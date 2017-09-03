@@ -26,7 +26,9 @@
 #include "IPAddress.h"
 #include <functional>
 
-#define ESP8266	// add for visual micro
+#ifndef ESP8266
+#define ESP8266
+#endif
 
 class AsyncClient;
 

@@ -9,7 +9,7 @@ Ticker OTAUpdater::updateChecker;
 void OTAUpdater::checkUpdate()
 {
 	DBGF("OTA Updateing.");
-	if (BWifi::instance()->status()==WL_CONNECTED)
+	if (WiFi.status()==WL_CONNECTED)
 	{
 		UpdateResult = ESPhttpUpdate.update(HBOS_UPDATE_SERVER, 80, HBOS_UPDATE_PATH, HBOS_Version);
 		switch (UpdateResult) {

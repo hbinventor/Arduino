@@ -29,8 +29,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266HTTPClient/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266httpUpdate}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266httpUpdate/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncTCP}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncTCP/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncUDP}&quot;"/>
@@ -41,6 +39,14 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Timezone}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Hash}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Hash/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/DHT}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Time}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/esp8266}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/esp8266/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi/src}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.cpp.sketch.input.1551970445" name="CPP source files" superClass="io.sloeber.compiler.cpp.sketch.input"/>
 							</tool>
@@ -56,8 +62,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266HTTPClient/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266httpUpdate}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266httpUpdate/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncTCP}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncTCP/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncUDP}&quot;"/>
@@ -68,6 +72,14 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Timezone}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Hash}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Hash/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/DHT}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Time}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/esp8266}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/esp8266/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi/src}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.c.sketch.input.1330642392" name="C Source Files" superClass="io.sloeber.compiler.c.sketch.input"/>
 							</tool>
@@ -83,8 +95,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266HTTPClient/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266httpUpdate}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266httpUpdate/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncTCP}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncTCP/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESPAsyncUDP}&quot;"/>
@@ -95,6 +105,14 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Timezone}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Hash}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Hash/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/async-mqtt-client/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/DHT}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/Time}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/esp8266}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/esp8266/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/IoTFirmware/libraries/ESP8266WiFi/src}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.S.sketch.input.1987543145" name="Assembly source files" superClass="io.sloeber.compiler.S.sketch.input"/>
 							</tool>
@@ -120,4 +138,9 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/IoTFirmware"/>
+		</configuration>
+	</storageModule>
 </cproject>

@@ -15,11 +15,11 @@ bool BWifi::addAPToList(const char * ssid, int rssi)
 
 bool BWifi::insertAPToList(BWifiInfo & wifi)
 {
-	WifiList.push_back(wifi);
+	_wifiList.push_back(wifi);
 	return true;
 }
 
-int BWifi::getRelativeFromRssi(int rssi)
+int BWifi::rssiToRelative(int rssi)
 {
 	int quality = 0;
 	if (rssi <= -100) {
@@ -41,16 +41,16 @@ void BWifi::init()
 
 bool BWifi::scanToList()
 {
-	if (getMode() != WIFI_AP_STA || getMode() != WIFI_AP)
+	if (WiFi.getMode() != WIFI_AP_STA || WiFi.getMode() != WIFI_AP)
 	{
-		mode(WIFI_AP_STA);
+		WiFi.mode(WIFI_AP_STA);
 	}
-	disconnect();
+	WiFi.disconnect();
 	delay(500);
 	DBG("Start WiFi scanning...");
-	int n = scanNetworks();
+	int n = WiFi.scanNetworks();
 	DBG("Scan done.");
-	WifiList.clear();
+	_wifiList.clear();
 	if (n <= 0)
 	{
 		DBG("No WiFi network found.");
@@ -59,13 +59,13 @@ bool BWifi::scanToList()
 	for (int i = 0; i < n; i++)
 	{
 		yield();
-		if (SSID(i).indexOf('"') < 0)
+		if (WiFi.SSID(i).indexOf('"') < 0)
 		{
-			int quality = getRelativeFromRssi(RSSI(i));
+			int quality = rssiToRelative(WiFi.RSSI(i));
 			if (quality)
-				addAPToList(SSID(i).c_str(), quality);
+				addAPToList(WiFi.SSID(i).c_str(), quality);
 			DBG2F0("ssid ", i);
-			DBG2F0(" : ", SSID(i));
+			DBG2F0(" : ", WiFi.SSID(i));
 			DBG2F(" - quality ", quality);
 		}
 	}
@@ -74,10 +74,10 @@ bool BWifi::scanToList()
 
 bool BWifi::hasAP(String ssid)
 {
-	int totalAP = WifiList.size();
+	int totalAP = _wifiList.size();
 	for (int i = 0; i < totalAP; i++)
 	{
-		if (ssid.equals(WifiList[i].ssid))
+		if (ssid.equals(_wifiList[i].ssid))
 		{
 			return true;
 		}
@@ -87,17 +87,17 @@ bool BWifi::hasAP(String ssid)
 
 bool BWifi::printWifiListTo(String & buffer)
 {
-	int totalAP = WifiList.size();
+	int totalAP = _wifiList.size();
 	StaticJsonBuffer<300> jsonBuffer;
 	JsonObject& root = jsonBuffer.createObject();
 	for (int i = 0; i < totalAP; i++) {
 		yield();
-		if (WifiList[i].ssid) {
-			String key = WifiList[i].ssid;
+		if (_wifiList[i].ssid) {
+			String key = _wifiList[i].ssid;
 			key += " (";
-			key += WifiList[i].rssi;
+			key += _wifiList[i].rssi;
 			key += "%)";
-			root.set(key, WifiList[i].ssid);
+			root.set(key, _wifiList[i].ssid);
 		}
 	}
 	root.printTo(buffer);

@@ -40,7 +40,7 @@ void BMQTT::onWifiConnect(const WiFiEventStationModeGotIP& event) {
 }
 
 BMQTT::BMQTT() {
-	BWifi::instance()->onStationModeGotIP(std::bind(&BMQTT::onWifiConnect, this, std::placeholders::_1));
+	WiFi.onStationModeGotIP(std::bind(&BMQTT::onWifiConnect, this, std::placeholders::_1));
 }
 
 BMQTT::~BMQTT() {

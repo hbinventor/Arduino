@@ -2,56 +2,43 @@
 //This is a automatic generated file
 //Please do not modify this file
 //If you touch this file your change will be overwritten during the next build
-//This file has been generated on 2017-08-31 16:52:14
+//This file has been generated on 2017-09-03 15:21:07
 
 #include "Arduino.h"
 #include <ESP8266WiFi.h>
-#include <ESPAsyncUDP.h>
-#include <ESP8266WiFiType.h>
-#include <ESP8266WiFiSTA.h>
-#include <ESP8266WiFiScan.h>
-#include <ESP8266WiFiMulti.h>
 #include <ESP8266WiFiGeneric.h>
 #include <ESP8266WiFiAP.h>
-#include <WiFiClientSecure.h>
-#include <WiFiClient.h>
-#include <Timezone.h>
-#include "TimeService.h"
-#include <ESP8266HTTPClient.h>
-#include <ESP8266httpUpdate.h>
-#include <ArduinoJson.h>
-#include <EEPROM.h>
-#include <FS.h>
-#include <TimeLib.h>
-#include <Ticker.h>
-#include <tcp_axtls.h>
-#include <SyncClient.h>
-#include <ESPAsyncTCPbuffer.h>
-#include <ESPAsyncTCP.h>
-#include <ESPAsyncWebServer.h>
-#include <async_config.h>
-#include <AsyncPrinter.h>
-#include <AsyncWebSocket.h>
-#include <AsyncJson.h>
-#include <AsyncEventSource.h>
-#include <AsyncMqttClient.h>
+#include <ESP8266WiFiType.h>
 #include <DNSServer.h>
-#include <WebResponseImpl.h>
-#include <WebHandlerImpl.h>
-#include <WebAuthentication.h>
-#include <StringArray.h>
-#include <SPIFFSEditor.h>
-#include <WiFiUdp.h>
 #include "Configs.h"
 #include "Singleton.h"
 #include "DB.h"
 #include "GPIOs.h"
-#include "HTTPServer.h"
 #include "OTAUpdater.h"
 #include "BMQTT.h"
 #include "BWifi.h"
 #include "BWebAPI.h"
+#include "BWebServer.h"
+#include "TimeService.h"
 #include "EventHandle.h"
+#include "html/favicon.png.h"
+#include "html/co22.png.h"
+#include "html/fire1.png.h"
+#include "html/hum2.png.h"
+#include "html/temp1.png.h"
+#include "html/jquery-3.1.0.min.js.gz.h"
+#include "html/md5.min.js.gz.h"
+#include "html/main.js.h"
+#include "html/main.css.h"
+#include "html/admin.html.h"
+#include "html/device.html.h"
+#include "html/email.html.h"
+#include "html/general.html.h"
+#include "html/gpio.html.h"
+#include "html/login.html.h"
+#include "html/network.html.h"
+#include "html/settings.html.h"
+#include "html/time.html.h"
 void setup() ;
 void loop() ;
 bool isWifiConnected() ;
@@ -69,6 +56,8 @@ void onMqttUnsubscribe(uint16_t packetId) ;
 void onMqttMessage(char * topic, char * payload, AsyncMqttClientMessageProperties properties, size_t len, size_t index, size_t total) ;
 void onMqttPublish(uint16_t packetId) ;
 void connectToMqtt() ;
+void WebServerInit() ;
+void handleRoot(AsyncWebServerRequest* request) ;
 void putValueOverMQTT() ;
 void checkResetButtonStartup() ;
 

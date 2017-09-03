@@ -1,55 +1,44 @@
-
 #include <ESP8266WiFi.h>
-#include <ESPAsyncUDP.h>
-#include <ESP8266WiFiType.h>
-#include <ESP8266WiFiSTA.h>
-#include <ESP8266WiFiScan.h>
-#include <ESP8266WiFiMulti.h>
 #include <ESP8266WiFiGeneric.h>
 #include <ESP8266WiFiAP.h>
-#include <WiFiClientSecure.h>
-#include <WiFiClient.h>
-#include <Timezone.h>
-#include "TimeService.h"
-#include <ESP8266HTTPClient.h>
-#include <ESP8266httpUpdate.h>
-#include <ArduinoJson.h>
-#include <EEPROM.h>
-#include <FS.h>
-#include <TimeLib.h>
-#include <Ticker.h>
-#include <tcp_axtls.h>
-#include <SyncClient.h>
-#include <ESPAsyncTCPbuffer.h>
-#include <ESPAsyncTCP.h>
-#include <ESPAsyncWebServer.h>
-#include <async_config.h>
-#include <AsyncPrinter.h>
-#include <AsyncWebSocket.h>
-#include <AsyncJson.h>
-#include <AsyncEventSource.h>
-#include <AsyncMqttClient.h>
+#include <ESP8266WiFiType.h>
 #include <DNSServer.h>
-#include <WebResponseImpl.h>
-#include <WebHandlerImpl.h>
-#include <WebAuthentication.h>
-#include <StringArray.h>
-#include <SPIFFSEditor.h>
-#include <WiFiUdp.h>
+// User libraries
 #include "Configs.h"
 #include "Singleton.h"
 #include "DB.h"
 #include "GPIOs.h"
-#include "HTTPServer.h"
 #include "OTAUpdater.h"
 #include "BMQTT.h"
 #include "BWifi.h"
 #include "BWebAPI.h"
+#include "BWebServer.h"
+#include "TimeService.h"
 #include "EventHandle.h"
+
+// HTML static file
+#include "html/favicon.png.h"
+#include "html/co22.png.h"
+#include "html/fire1.png.h"
+#include "html/hum2.png.h"
+#include "html/temp1.png.h"
+#include "html/jquery-3.1.0.min.js.gz.h"
+#include "html/md5.min.js.gz.h"
+#include "html/main.js.h"
+#include "html/main.css.h"
+#include "html/admin.html.h"
+#include "html/device.html.h"
+#include "html/email.html.h"
+#include "html/general.html.h"
+#include "html/gpio.html.h"
+#include "html/login.html.h"
+#include "html/network.html.h"
+#include "html/settings.html.h"
+#include "html/time.html.h"
 
 #define gDB	DB::instance()
 #define gWF	WifiManager::instance()
-#define	gHTTP	HTTPServer::instance()
+#define	gHTTP	BWebServer::instance()
 #define	gTime	TimeService::instance()
 
 /************************************************************************
@@ -75,6 +64,9 @@ DNSServer *DnsServer;
 void DNSServerStart();
 void DNSServerStop();
 
+// Webserver
+void WebServerInit();
+void handleRoot(AsyncWebServerRequest *request);
 // MQTT
 Ticker MQTTTicker;
 void MQTTInit();
@@ -101,34 +93,13 @@ void setup() {
 		startAPMode();
 		return;
 	}
+
 	// Thiet lap port cho HTTP server
-	gHTTP->on("/favicon.png", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendFile(request, favicon_png, MimePNG, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/favicon.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, favicon_png, MimePNG, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/js/jquery-3.1.0.min.js.gz", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, jquery_3_1_0_min_js_gz, MimeTypeJS, GZIP_ENABLE, BROWSER_CACHE_DAYS); });
-	on("/js/md5.min.js.gz", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, md5_min_js_gz, MimeTypeJS, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/js/main.js", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, main_js, MimeTypeJS, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/css/main.css", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, main_css, MimeCss, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/admin.htm", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, admin_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/device.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, device_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/email.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, email_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/gpio.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, gpio_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/login.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, login_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/network.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, network_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/settings.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, settings_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/time.html", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, time_html, MimeHtml, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/co22.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, co22_png, MimePNG, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/fire1.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, fire1_png, MimePNG, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/hum2.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, hum22_png, MimePNG, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	on("/temp1.png", HTTP_ANY, [&](AsyncWebServerRequest *request) {HTTPServer::sendFile(request, temp1_png, MimePNG, GZIP_DISABLE, BROWSER_CACHE_DAYS); });
-	onNotFound(std::bind(&HTTPServer::handleNotFound, this, std::placeholders::_1));
-	onRequestBody([&](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total) {
-		handleBody(request, data, len, index, total);
-	});
-	gHTTP->begin();
+	WebServerInit();
 
 	// Cac handle phat hien wifi event
-	BWifi::instance()->onStationModeGotIP(handleWifiConnect);
-	BWifi::instance()->onStationModeDisconnected(handleWifiDisconnect);
+	WiFi.onStationModeGotIP(handleWifiConnect);
+	WiFi.onStationModeDisconnected(handleWifiDisconnect);
 
 	// Thiet lap TimeService: Time server va Timezone
 	gTime->setNTPServer(gDB->getTimeServer().c_str());
@@ -154,7 +125,7 @@ void loop() {
 ********************************************************************/
 bool isWifiConnected()
 {
-	return BWifi::instance()->isConnected();
+	return WiFi.isConnected();
 }
 // Handle khi bi mat ket noi wifi
 void handleWifiDisconnect(const WiFiEventStationModeDisconnected & event)
@@ -168,7 +139,7 @@ void handleWifiDisconnect(const WiFiEventStationModeDisconnected & event)
 void handleWifiConnect(const WiFiEventStationModeGotIP & event)
 {
 	DBGF("Wifi Station got IP: ");
-	DBG(BWifi::instance()->localIP());
+	DBG(WiFi.localIP());
 
 }
 
@@ -194,14 +165,14 @@ void connectToWifiAP()
 	DBG2F("SSID:", gDB->getSSID());
 	DBG2F("PW:", gDB->getWifiPassword());
 	// Set che do auto connect, chua biet co hoat dong khong, SDK noi vay
-	BWifi::instance()->setAutoConnect(true);
+	WiFi.setAutoConnect(true);
 	if (gDB->getWifiPassword().length() != 0)	// Neu mang Wifi dung mat khau
 	{
-		BWifi::instance()->begin(gDB->getSSID().c_str(), gDB->getWifiPassword().c_str());
+		WiFi.begin(gDB->getSSID().c_str(), gDB->getWifiPassword().c_str());
 	}
 	else// Wifi Open
 	{
-		BWifi::instance()->begin(gDB->getSSID().c_str());
+		WiFi.begin(gDB->getSSID().c_str());
 	}
 }
 
@@ -231,7 +202,7 @@ void DNSServerStop()
 
 void startAPMode() {
 	// set mode AP_STA de scan network khi cai dat
-	BWifi::instance()->mode(WIFI_AP_STA);
+	WiFi.mode(WIFI_AP_STA);
 	// Thiet lap IP cho AP
 	IPAddress ip;
 	IPAddress gw;
@@ -239,9 +210,9 @@ void startAPMode() {
 	ip.fromString(gDB->getIP(true));
 	gw.fromString(gDB->getGateway(true));
 	msk.fromString(gDB->getMask(true));
-	BWifi::instance()->softAPConfig(ip, gw, msk);
+	//WiFi.softAPConfig(ip, gw, msk);
 	// Thiet lap ten SSID va mat khau
-	BWifi::instance()->softAP(gDB->getDeviceSerial().c_str(), gDB->getWifiPassword(true).c_str());
+	//WiFi.softAP(gDB->getDeviceSerial().c_str(), gDB->getWifiPassword(true).c_str());
 	// Bat DNS server dieu huowng ket noi ve AP IP
 	DNSServerStart();
 }
@@ -288,7 +259,7 @@ void onMqttConnect(bool sessionPresent)
 void onMqttDisconnect(AsyncMqttClientDisconnectReason reason)
 {
 	DBGF("Disconnected from MQTT.");
-	if (BWifi::instance()->isConnected()) {
+	if (WiFi.isConnected()) {
 		DBGF("Connecting to MQTT...");
 		MQTTTicker.once(2, connectToMqtt);
 	}
@@ -342,6 +313,46 @@ void connectToMqtt()
 	DBGF("Connecting to MQTT...");
 	BMQTT::instance()->connect();
 }
+
+/*
+ * Khoi dong Webserver, thiet lap duong dan den cac file
+ * */
+void WebServerInit() {
+	// Static file
+	gHTTP->on("/favicon.png", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, favicon_png, MimePNG, false); });
+	gHTTP->on("/co22.png", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, co22_png, MimePNG, false); });
+	gHTTP->on("/fire1.png", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, fire1_png, MimePNG, false); });
+	gHTTP->on("/hum2.png", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, hum22_png, MimePNG, false); });
+	gHTTP->on("/temp1.png", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, temp1_png, MimePNG, false); });
+	gHTTP->on("/js/jquery-3.1.0.min.js.gz", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, jquery_3_1_0_min_js_gz, MimeTypeJS); });
+	gHTTP->on("/js/md5.min.js.gz", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, md5_min_js_gz, MimeTypeJS); });
+	gHTTP->on("/js/main.js", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, main_js, MimeTypeJS, false); });
+	gHTTP->on("/css/main.css", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, main_css, MimeCss, false); });
+	gHTTP->on("/admin.htm", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, admin_html, MimeHtml, false); });
+	gHTTP->on("/device.htm", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, device_html, MimeHtml, false); });
+	gHTTP->on("/email.htm", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, email_html, MimeHtml, false); });
+	gHTTP->on("/gpio.htm", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, gpio_html, MimeHtml, false); });
+	gHTTP->on("/login.htm", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, login_html, MimeHtml, false); });
+	gHTTP->on("/network.htm", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, network_html, MimeHtml, false); });
+	gHTTP->on("/settings.htm", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, settings_html, MimeHtml, false); });
+	gHTTP->on("/time.htm", HTTP_ANY, [](AsyncWebServerRequest *request) {gHTTP->sendStaticFile(request, time_html, MimeHtml, false); });
+
+	// Ajax
+
+	// Root and notfound 404
+	gHTTP->on(PATH_ROOT, HTTP_ANY, handleRoot);
+	gHTTP->onNotFound(std::bind(&gHTTP->handleNotFound, std::placeholders::_1));
+	//gHTTP->onRequestBody([&](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total) {
+		//gHTTP->handleBody(request, data, len, index, total);
+	//});
+
+	// Bat dau lang nghe
+	gHTTP->begin();
+}
+
+void handleRoot(AsyncWebServerRequest* request) {
+}
+
 // Put value to Device Topic
 void putValueOverMQTT()
 {
